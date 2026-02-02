@@ -10,7 +10,7 @@ function PhotoGallery() {
       .then((data) => {
         setPhotos(data.data || data)
       })
-  }, [page])
+    }, [page])
   return (
     <div className='min-h-screen bg-orange-200 p-8 text-amber-900'>
       <h3 className='font-extrabold text-3xl text-center mb-8 ' >Photo Gallery</h3>
@@ -20,7 +20,7 @@ function PhotoGallery() {
           <div key={photo.id} className='bg-white rounded-lg shadow-gray-300 cursor-pointer overflow-hidden hover:scale-90 transform transition duration-200'>
             <img src={photo.photo_url} alt={photo.caption} className='w-full h-48 object-cover' />
             <div className='p-4'>
-              <div className='text-sm text-black-400 truncate'>{ photo.caption}</div>
+              <div className='text-sm text-black truncate'>{ photo.caption}</div>
             </div>
           </div>
         ))}
@@ -31,13 +31,15 @@ function PhotoGallery() {
         
       <button 
         onClick={() => setPage(prev => Math.max(prev - 1, 1))} 
-        className="px-4 py-2 bg-orange-900 text-white rounded-lg cursor-pointer">
+          className="px-4 py-2 bg-orange-900 text-white rounded-lg cursor-pointer transition-colors duration-200
+         hover:bg-orange-300 hover:text-black shadow-lg disabled:bg-gray-400">
         Previous
       </button>
       <span className="self-center font-semibold text-shadow-gray-950 ">Page {page}</span>
       <button 
         onClick={() => setPage(prev => prev + 1)} 
-        className="px-4 py-2 bg-orange-900 text-white rounded-lg cursor-pointer">
+          className="px-4 py-2 bg-orange-900 text-white rounded-lg cursor-pointer 
+        ransition-colors duration-300 hover:bg-orange-300 hover:text-black shadow-lg disabled:bg-gray-400">
         Next
       </button>
     </div>
