@@ -32,14 +32,14 @@ function PhotoGallery() {
       <button 
         onClick={() => setPage(prev => Math.max(prev - 1, 1))} 
           className="px-4 py-2 bg-orange-900 text-white rounded-lg cursor-pointer transition-colors duration-200
-         hover:bg-orange-300 hover:text-black shadow-lg disabled:bg-gray-400">
+         hover:bg-orange-300 hover:text-black shadow-lg">
         Previous
       </button>
       <span className="self-center font-semibold text-shadow-gray-950 ">Page {page}</span>
       <button 
         onClick={() => setPage(prev => prev + 1)} 
           className="px-4 py-2 bg-orange-900 text-white rounded-lg cursor-pointer 
-        ransition-colors duration-300 hover:bg-orange-300 hover:text-black shadow-lg disabled:bg-gray-400">
+        transition-colors duration-300 hover:bg-orange-300 hover:text-black shadow-lg">
         Next
       </button>
     </div>
