@@ -1,4 +1,5 @@
 import PhotoGallery from "./Components/PhotoGallery"
+import Sample from "./Components/Sample"
 
 
 function App() {
@@ -7,7 +8,8 @@ function App() {
   return (
     <>
       
-        <PhotoGallery />
+      <PhotoGallery />
+     {/* <Sample /> */}
         
     </>
   )

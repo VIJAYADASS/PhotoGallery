@@ -3,29 +3,32 @@ import React, { useEffect, useState } from 'react'
 function PhotoGallery() {
   const [photos, setPhotos] = useState([])
   const [page, setPage] = useState(1)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     fetch(`https://jsonfakery.com/photos/paginated?page=${page}`)
       .then((response) => response.json())
       .then((data) => {
         setPhotos(data.data || data)
+        setLoading(false);
       })
     }, [page])
   return (
     <div className='min-h-screen bg-orange-200 p-8 text-amber-900'>
-      <h3 className='font-extrabold text-3xl text-center mb-8 ' >Photo Gallery</h3>
+      <h3 className='font-extrabold text-3xl text-center mb-8 ' >Photo Explorer</h3>
 
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
-        {photos.map((photo) => (
-          <div key={photo.id} className='bg-white rounded-lg shadow-gray-300 cursor-pointer overflow-hidden hover:scale-90 transform transition duration-200'>
-            <img src={photo.photo_url} alt={photo.caption} className='w-full h-48 object-cover' />
-            <div className='p-4'>
-              <div className='text-sm text-black truncate'>{ photo.caption}</div>
+      {loading ? (
+        <p className='text-center text-xl font-semibold'>Loading...</p>
+      ) : (
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6'>
+          {photos.map((photo) => (
+            <div key={photo.id} className='bg-white rounded-xl shadow-md overflow-hidden'>
+              <img src={photo.photo_url} className='w-full h-48 object-cover' alt="img" />
+              <div className='p-4 text-sm font-bold truncate'>{photo.caption}</div>
             </div>
-          </div>
-        ))}
-
-      </div>
+          ))}
+        </div>
+      )}
 
       <div className="flex justify-center mt-10 space-x-4">
         
