@@ -4,15 +4,29 @@ function PhotoGallery() {
   const [photos, setPhotos] = useState([])
   const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false)
+  const [totalPages, setTotalPages] = useState(1)
 
   useEffect(() => {
     fetch(`https://jsonfakery.com/photos/paginated?page=${page}`)
       .then((response) => response.json())
       .then((data) => {
-        setPhotos(data.data || data)
+        setPhotos(data.data)
+        setTotalPages(data.last_page);
         setLoading(false);
       })
-    }, [page])
+  }, [page])
+  
+   const renderPageNumbers = () => {
+    let numbers = [];
+    let start = Math.max(1, page - 2);
+    let end = Math.min(totalPages, page + 2);
+
+    for (let i = start; i <= end; i++) {
+      numbers.push(i);
+    }
+    return numbers;
+  };
+
   return (
     <div className='min-h-screen bg-orange-200 p-8 text-amber-900'>
       <h3 className='font-extrabold text-3xl text-center mb-8 ' >Photo Explorer</h3>
@@ -30,22 +44,42 @@ function PhotoGallery() {
         </div>
       )}
 
-      <div className="flex justify-center mt-10 space-x-4">
-        
-      <button 
-        onClick={() => setPage(prev => Math.max(prev - 1, 1))} 
-          className="px-4 py-2 bg-orange-900 text-white rounded-lg cursor-pointer transition-colors duration-200
-         hover:bg-orange-300 hover:text-black shadow-lg">
-        Previous
-      </button>
-      <span className="self-center font-semibold text-shadow-gray-950 ">Page {page}</span>
-      <button 
-        onClick={() => setPage(prev => prev + 1)} 
-          className="px-4 py-2 bg-orange-900 text-white rounded-lg cursor-pointer 
-        transition-colors duration-300 hover:bg-orange-300 hover:text-black shadow-lg">
-        Next
-      </button>
-    </div>
+      <div className="flex  flex-col items-center mt-12 gap-4">
+        <div className='flex items-center gap-2 bg-white p-2  rounded-lg shadow'>
+
+          <button 
+            disabled={page === 1}
+            onClick={() => setPage(page - 1)}
+            className="px-3 py-1 bg-gray-100 rounded hover:bg-orange-900 hover:text-white disabled:opacity-20 cursor-pointer"
+          >
+            Prev
+          </button>
+
+          {renderPageNumbers().map((num) => (
+            <button
+              key={num}
+              onClick={() => setPage(num)}
+              className={`w-10 h-10 rounded font-bold cursor-pointer ${
+                page === num ? 'bg-orange-900 text-white' : 'bg-gray-100'
+              }`}
+            >
+              {num}
+            </button>
+          ))}
+
+          <button 
+            disabled={page === totalPages}
+            onClick={() => setPage(page + 1)}
+            className="px-3 py-1 bg-gray-100 rounded hover:bg-orange-900 hover:text-white disabled:opacity-20 cursor-pointer"
+          >
+            Next
+          </button>  
+        </div>
+
+        <p className='text-black font-medium'>
+          Page <span className="text-orange-900">{page}</span> of <span className="text-orange-900">{totalPages}</span>
+        </p>
+      </div>
     </div>
   )
 }
