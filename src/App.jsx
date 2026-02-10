@@ -1,3 +1,4 @@
+import Sample from "../Sample"
 import PhotoGallery from "./Components/PhotoGallery"
 
 
@@ -9,6 +10,7 @@ function App() {
     <>
       
       <PhotoGallery />
+      {/* <Sample /> */}
      
         
     </>
